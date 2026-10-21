@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="app-mode" content="path">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%231f4fa3%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%228%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22/%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Statis Tes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kumpulan tes intelegensi, IQ, dan verbal untuk studi kasus ANOVA Statistika Industri 2.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: lembar jawaban komputer (LJK) — pita header bertinta biru formulir, tab kode asisten, kartu soal dengan gelembung jawaban */
+:root{
+  --paper:#f6f7fb; --sheet:#ffffff; --ink:#1d2433; --muted:#5b6478; --rule:#d6dbe8;
+  --form:#1f4fa3; --form-soft:#e6edfa; --on-form:#ffffff; --graphite:#2a2f3a;
+  --ok:#17824a; --ok-soft:#e3f4ea; --bad:#c23a2b; --bad-soft:#fbe7e4; --warn:#a86400;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Public Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#11141c; --sheet:#181c27; --ink:#e7eaf2; --muted:#9aa3b8; --rule:#2c3344;
+  --form:#7ea6f2; --form-soft:#1d2a45; --on-form:#0e1626; --graphite:#e7eaf2;
+  --ok:#4fc887; --ok-soft:#14301f; --bad:#f07a6b; --bad-soft:#3a1d19; --warn:#e0a64a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11141c; --sheet:#181c27; --ink:#e7eaf2; --muted:#9aa3b8; --rule:#2c3344;
+  --form:#7ea6f2; --form-soft:#1d2a45; --on-form:#0e1626; --graphite:#e7eaf2;
+  --ok:#4fc887; --ok-soft:#14301f; --bad:#f07a6b; --bad-soft:#3a1d19; --warn:#e0a64a; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--paper)}
+body{color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--form)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--form)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--form);outline-offset:2px}
+
+/* header */
+.top{background:var(--form);color:#fff}
+.top .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-block:18px 14px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:inherit}
+.brand b{font:800 1.7rem/1 var(--f-display);letter-spacing:-.02em}
+.brand span{font-size:.82rem;opacity:.85}
+.top .meta{font:500 .75rem/1.4 var(--f-mono);opacity:.85;text-align:right}
+@media (max-width:560px){.top .meta{display:none}.brand b{font-size:1.45rem}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .top{background:#1a2a4d}}
+:root[data-theme="dark"] .top{background:#1a2a4d}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sheet);border-bottom:1px solid var(--rule)}
+.tabs .wrap{position:relative;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-block:8px}
+.tab{flex:0 0 auto;display:flex;flex-direction:column;gap:0;padding:6px 12px;border-radius:6px;text-decoration:none;color:var(--muted);border:1px solid transparent}
+.tab small{font:700 .68rem/1.3 var(--f-mono);letter-spacing:.04em}
+.tab span{font-size:.84rem;font-weight:600;white-space:nowrap}
+.tab:hover{background:var(--form-soft);color:var(--ink)}
+.tab[aria-current="page"]{background:var(--form-soft);color:var(--form);border-color:var(--form)}
+
+main{padding-block:28px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.015em}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.1;font-weight:800}
+h2{font-size:1.25rem;font-weight:700}
+.eyebrow{font:700 .72rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--form)}
+.lead{color:var(--muted);max-width:62ch;margin:0}
+
+/* beranda */
+.home-head{display:grid;gap:10px;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{display:grid;gap:8px;padding:16px;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--form);transform:translateY(-1px)}
+.card .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.code{font:700 .78rem/1 var(--f-mono);color:var(--form);background:var(--form-soft);padding:5px 8px;border-radius:4px}
+.tag{font-size:.75rem;color:var(--muted);font-weight:600}
+.card h3{font-size:1.08rem;font-weight:700}
+.stats{display:flex;gap:14px;font:500 .8rem/1 var(--f-mono);color:var(--muted)}
+
+/* halaman tes */
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.sheet-head{display:grid;gap:10px;padding:22px 22px 18px;border-bottom:1px dashed var(--rule)}
+.sheet-body{padding:22px;display:grid;gap:18px}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.rules div{padding:12px 14px;border-right:1px solid var(--rule);display:grid;gap:2px}
+.rules div:last-child{border-right:0}
+.rules dt{font:700 .68rem/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rules dd{margin:0;font:700 1.15rem/1.2 var(--f-display)}
+@media (max-width:560px){.rules{grid-template-columns:1fr 1fr}.rules div:nth-child(2n){border-right:0}.rules div{border-bottom:1px solid var(--rule)}}
+ul.ket{margin:0;padding-left:20px;display:grid;gap:4px;color:var(--ink)}
+ul.ket li::marker{color:var(--form)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:8px;border:1px solid var(--form);background:var(--form);color:var(--on-form);font-weight:700;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--form)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.notice{padding:12px 14px;border-radius:8px;background:var(--bad-soft);color:var(--bad);font-weight:600}
+
+/* kuis */
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 22px;border-bottom:1px solid var(--rule);background:var(--form-soft);flex-wrap:wrap}
+.timer{font:700 1.15rem/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad)}
+.prog{font:600 .85rem/1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.track{height:4px;background:var(--rule)}
+.track i{display:block;height:100%;background:var(--form);transition:width .25s}
+.qnum{font:700 .78rem/1 var(--f-mono);color:var(--form);letter-spacing:.06em}
+.prompt{font-size:1.12rem;line-height:1.5}
+.kapital{font:700 1.35rem/1.3 var(--f-display);letter-spacing:.02em}
+.hitung{font:700 1.5rem/1.3 var(--f-mono);font-variant-numeric:tabular-nums}
+.tanya{color:var(--muted);font-size:.95rem}
+.figure{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.figure>.fig{width:140px;height:140px;border:1px solid var(--rule);border-radius:8px;background:var(--paper)}
+.fig .ink{fill:var(--graphite)}
+.fig .ink-o{fill:none;stroke:var(--graphite);stroke-width:4;stroke-linejoin:round}
+.fig .frame{fill:none;stroke:var(--rule);stroke-width:2}
+.fig .cellbg{fill:var(--rule);opacity:.35}
+.kunci{display:grid;gap:6px}
+.kunci-cap{font:700 .7rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kunci table{border-collapse:collapse}
+.kunci th,.kunci td{border:1px solid var(--rule);width:54px;text-align:center;padding:6px}
+.kunci th{font:700 .8rem var(--f-mono);color:var(--form);background:var(--form-soft)}
+.kunci td{font:700 1.4rem/1.2 var(--f-mono)}
+.soal-krk{display:flex;gap:10px}
+.soal-krk span{display:grid;place-items:center;width:52px;height:52px;border:2px solid var(--graphite);border-radius:6px;font:700 1.5rem var(--f-mono)}
+
+.opts{display:grid;gap:8px}
+.opts.visual{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.opts.visual.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.opts.compact{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:620px){.opts.visual,.opts.visual.n4{grid-template-columns:repeat(3,minmax(0,1fr))}.opts.compact{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;padding:10px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:8px;min-width:0}
+.opt:hover:not(:disabled){border-color:var(--form);background:var(--form-soft)}
+.opt .bub{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:2px solid var(--form);font:700 .82rem/1 var(--f-mono);color:var(--form)}
+.opt .txt{min-width:0;overflow-wrap:anywhere}
+.opts.visual .opt{flex-direction:column;padding:10px 8px}
+.opts.visual .opt .fig{width:100%;max-width:120px;aspect-ratio:1;height:auto}
+.opts.compact .opt{justify-content:center}
+.opt:disabled{cursor:default}
+.opt.chosen .bub{background:var(--graphite);border-color:var(--graphite);color:var(--sheet)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .bub{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .bub{background:var(--bad);border-color:var(--bad);color:#fff}
+.verdict{font:800 1.05rem/1 var(--f-display)}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--bad)}
+
+/* formulir & hasil */
+form.ident{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){form.ident{grid-template-columns:1fr}}
+.field{display:grid;gap:6px}
+.field label{font-weight:600;font-size:.9rem}
+.field input,.field select{font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);width:100%}
+.full{grid-column:1/-1}
+.score{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.score b{font:800 clamp(3rem,10vw,4.6rem)/1 var(--f-display);color:var(--form);letter-spacing:-.03em}
+.score span{font-size:1.05rem;color:var(--muted)}
+.idbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.idbox div{padding:10px 14px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;gap:2px;min-width:0}
+.idbox dt{font:700 .66rem/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.idbox dd{margin:0;font-weight:700;overflow-wrap:anywhere}
+.tblwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:8px}
+table.rev{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+table.rev th,table.rev td{padding:7px 10px;border-bottom:1px solid var(--rule);text-align:left;white-space:nowrap}
+table.rev th{font:700 .7rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--paper)}
+.ok-t{color:var(--ok);font-weight:700}.no-t{color:var(--bad);font-weight:700}
+.hint{font-size:.85rem;color:var(--muted)}
+footer{padding-block:24px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--rule)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" id="brand" href="#"><b>Statis Tes</b><span>Tes intelegensi · IQ · verbal — Studi Kasus ANOVA</span></a>
+  <div class="meta">Statistika Industri 2<br>11 tipe tes · DM-112 s.d. DM-122</div>
+</div></header>
+<nav class="tabs" aria-label="Tipe tes"><div class="wrap" id="tabs"></div></nav>
+<main><div class="wrap" id="view"></div></main>
+<footer><div class="wrap">Soal disusun khusus untuk aplikasi ini. Jawaban salah tidak mengurangi nilai. Hasil tersimpan hanya di perangkat yang digunakan.</div></footer>
+
+<script>
+/* ===== Bank soal Statis Tes — semua soal disusun ulang (orisinal) ===== */
+/* Format soal teks: [pertanyaan, jawabanBenar, pengecoh1, pengecoh2, pengecoh3, pengecoh4] */
+
+const BANK = {};
+
+BANK.aritmatika = [
+  ["125 + 378 − 219 = …", "284", "274", "294", "286", "264"],
+  ["24 × 15 = …", "360", "340", "350", "370", "380"],
+  ["864 : 12 = …", "72", "68", "74", "76", "82"],
+  ["25% dari 480 adalah …", "120", "100", "110", "125", "140"],
+  ["3/4 + 2/3 = …", "1 5/12", "1 1/12", "5/7", "1 1/3", "1 7/12"],
+  ["0,6 × 0,25 = …", "0,15", "0,015", "1,5", "0,25", "0,35"],
+  ["Lanjutkan deret: 3, 7, 15, 31, …", "63", "62", "61", "64", "47"],
+  ["Lanjutkan deret: 2, 6, 12, 20, 30, …", "42", "40", "36", "44", "48"],
+  ["1/8 jika dinyatakan dalam persen adalah …", "12,5%", "8%", "12%", "18%", "80%"],
+  ["Harga sebuah buku Rp12.500. Harga 8 buku adalah …", "Rp100.000", "Rp90.000", "Rp96.000", "Rp104.000", "Rp112.500"],
+  ["Rata-rata dari 6, 8, 10, 12, 14 adalah …", "10", "9", "11", "12", "8"],
+  ["15% dari 2.000 kemudian dikurangi 45 hasilnya …", "255", "245", "265", "275", "300"],
+  ["Sebuah mobil menempuh 180 km dalam 2,5 jam. Kecepatan rata-ratanya … km/jam", "72", "70", "75", "80", "68"],
+  ["√144 + 3² = …", "21", "18", "24", "27", "15"],
+  ["Sebuah barang seharga Rp250.000 didiskon 20%. Harga yang dibayar …", "Rp200.000", "Rp230.000", "Rp210.000", "Rp180.000", "Rp220.000"],
+  ["7² − 4³ = …", "−15", "15", "−13", "−17", "13"],
+  ["Perbandingan uang A : B = 3 : 5. Jika jumlah uang keduanya Rp64.000, uang B adalah …", "Rp40.000", "Rp24.000", "Rp36.000", "Rp38.000", "Rp45.000"],
+  ["2,5 jam sama dengan … menit", "150", "125", "140", "155", "250"],
+  ["Lanjutkan deret: 81, 27, 9, 3, …", "1", "0", "1/3", "2", "6"],
+  ["Jika 4x − 7 = 21, maka x = …", "7", "6", "8", "5", "3"]
+];
+
+BANK.analogi = [
+  ["DOKTER : RUMAH SAKIT", "Guru : Sekolah", "Petani : Pupuk", "Hakim : Palu", "Pilot : Langit", "Siswa : Buku"],
+  ["MATAHARI : SIANG", "Bulan : Malam", "Bintang : Langit", "Awan : Hujan", "Lampu : Terang", "Pagi : Sore"],
+  ["PENA : MENULIS", "Gunting : Memotong", "Kertas : Melipat", "Buku : Rak", "Sapu : Kotor", "Mata : Kacamata"],
+  ["AIR : HAUS", "Makanan : Lapar", "Tidur : Kasur", "Obat : Dokter", "Panas : Api", "Minum : Gelas"],
+  ["RODA : MOBIL", "Kaki : Meja", "Jalan : Aspal", "Bensin : Motor", "Sopir : Bus", "Garasi : Mobil"],
+  ["PANAS : DINGIN", "Tinggi : Rendah", "Besar : Raksasa", "Hujan : Basah", "Siang : Terik", "Cepat : Kilat"],
+  ["IKAN : AIR", "Burung : Udara", "Kucing : Tikus", "Sapi : Rumput", "Ular : Bisa", "Ayam : Telur"],
+  ["GURU : MURID", "Dokter : Pasien", "Polisi : Pencuri", "Penjual : Toko", "Penulis : Buku", "Pemain : Bola"],
+  ["BENIH : POHON", "Telur : Ayam", "Air : Laut", "Daun : Ranting", "Bunga : Harum", "Akar : Tanah"],
+  ["TERMOMETER : SUHU", "Barometer : Tekanan udara", "Penggaris : Kertas", "Jam : Dinding", "Timbangan : Pasar", "Kompas : Peta"],
+  ["LAPAR : MAKAN", "Lelah : Istirahat", "Sakit : Rumah sakit", "Gelap : Malam", "Haus : Gelas", "Kantuk : Malam"],
+  ["MERAH : WARNA", "Segitiga : Bentuk", "Pensil : Tulis", "Garam : Asin", "Panjang : Meter", "Mangga : Pohon"],
+  ["PETANI : SAWAH", "Nelayan : Laut", "Pedagang : Uang", "Penjahit : Benang", "Pelukis : Kuas", "Sopir : Bensin"],
+  ["KUNCI : GEMBOK", "Obeng : Sekrup", "Pintu : Rumah", "Jendela : Kaca", "Tali : Sepatu", "Meja : Kursi"],
+  ["KEMARAU : KERING", "Hujan : Basah", "Banjir : Air", "Petir : Langit", "Pelangi : Warna", "Musim : Tahun"],
+  ["MOBIL : BENSIN", "Manusia : Makanan", "Kapal : Laut", "Lampu : Saklar", "Sepeda : Jalan", "Rumah : Atap"],
+  ["BUKU : PERPUSTAKAAN", "Obat : Apotek", "Pensil : Kertas", "Atap : Rumah", "Roda : Sepeda", "Lantai : Keramik"],
+  ["ANGIN : KINCIR", "Listrik : Lampu", "Tanah : Pohon", "Api : Asap", "Cahaya : Bayangan", "Batu : Gunung"],
+  ["TELINGA : MENDENGAR", "Hidung : Mencium", "Tangan : Sarung", "Kaki : Sepatu", "Mulut : Gigi", "Mata : Alis"],
+  ["SEMUT : SERANGGA", "Paus : Mamalia", "Ular : Bisa", "Elang : Terbang", "Katak : Kolam", "Kuda : Pelana"],
+  ["RAJIN : PANDAI", "Hemat : Kaya", "Lari : Cepat", "Tidur : Mimpi", "Tinggi : Langit", "Makan : Sendok"],
+  ["GELAP : TERANG", "Sempit : Luas", "Pagi : Siang", "Basah : Air", "Hitam : Arang", "Malam : Bulan"],
+  ["PILOT : PESAWAT", "Nakhoda : Kapal", "Penumpang : Bus", "Masinis : Rel", "Montir : Bengkel", "Kusir : Cambuk"],
+  ["GULA : MANIS", "Garam : Asin", "Teh : Gelas", "Cabai : Merah", "Es : Batu", "Madu : Lebah"],
+  ["KILOMETER : JARAK", "Kilogram : Massa", "Liter : Botol", "Detik : Menit", "Celsius : Termometer", "Rupiah : Bank"],
+  ["PUISI : PENYAIR", "Lagu : Komponis", "Lukisan : Kanvas", "Novel : Halaman", "Patung : Batu", "Film : Bioskop"],
+  ["BAJU : LEMARI", "Piring : Rak", "Kemeja : Kancing", "Topi : Kepala", "Sepatu : Kaki", "Celana : Panjang"],
+  ["TIKUS : KUCING", "Ulat : Burung", "Singa : Rusa", "Sapi : Rumput", "Kambing : Domba", "Ikan : Air"],
+  ["AWAL : AKHIR", "Lahir : Wafat", "Mulai : Proses", "Pagi : Siang", "Senin : Selasa", "Kepala : Leher"],
+  ["BATERAI : SENTER", "Gas : Kompor", "Kabel : Listrik", "Bohlam : Lampu", "Tombol : Remot", "Layar : Televisi"]
+];
+
+BANK.kosakata = [
+  ["Wortel", "Apel", "Jeruk", "Mangga", "Pisang"],
+  ["Beringin", "Mawar", "Melati", "Anggrek", "Kenanga"],
+  ["Seruling", "Gitar", "Biola", "Harpa", "Ukulele"],
+  ["Saham", "Rupiah", "Dolar", "Yen", "Euro"],
+  ["Juni", "Senin", "Selasa", "Kamis", "Sabtu"],
+  ["Bulan", "Merkurius", "Venus", "Mars", "Jupiter"],
+  ["Hiu", "Paus", "Lumba-lumba", "Pesut", "Duyung"],
+  ["Paku", "Palu", "Gergaji", "Obeng", "Tang"],
+  ["Liter", "Kilogram", "Ons", "Gram", "Ton"],
+  ["Lapar", "Sedih", "Gembira", "Marah", "Takut"],
+  ["Pesawat", "Kapal", "Perahu", "Rakit", "Sampan"],
+  ["Jawa Barat", "Jakarta", "Bandung", "Surabaya", "Medan"],
+  ["Kayu", "Tembaga", "Besi", "Perak", "Emas"],
+  ["Penghapus", "Pena", "Pensil", "Spidol", "Kapur"],
+  ["Celana", "Kemeja", "Kaos", "Jaket", "Sweter"]
+];
+
+BANK.sinonim = [
+  ["CERDAS", "Pandai", "Rajin", "Cepat", "Teliti", "Berani"],
+  ["CANTIK", "Elok", "Muda", "Kaya", "Lembut", "Ramah"],
+  ["MAHIR", "Terampil", "Pemula", "Tekun", "Sabar", "Gesit"],
+  ["KUNO", "Kolot", "Modern", "Mewah", "Langka", "Asing"],
+  ["SAHIH", "Valid", "Palsu", "Ragu", "Lengkap", "Rinci"],
+  ["NISCAYA", "Pasti", "Mungkin", "Jarang", "Sering", "Segera"],
+  ["KENDALA", "Hambatan", "Tujuan", "Rencana", "Kendaraan", "Cara"],
+  ["LAZIM", "Biasa", "Aneh", "Wajib", "Langka", "Penting"],
+  ["ESTIMASI", "Perkiraan", "Kepastian", "Laporan", "Catatan", "Rencana"],
+  ["FIKTIF", "Rekaan", "Nyata", "Lama", "Resmi", "Ilmiah"],
+  ["ABSURD", "Janggal", "Logis", "Wajar", "Lucu", "Sulit"],
+  ["EVALUASI", "Penilaian", "Perencanaan", "Pelaksanaan", "Penundaan", "Pengumuman"],
+  ["FRIKSI", "Perselisihan", "Persatuan", "Kerja sama", "Kesepakatan", "Perundingan"],
+  ["ADAPTASI", "Penyesuaian", "Penolakan", "Pengulangan", "Penghapusan", "Pengurangan"],
+  ["GAMANG", "Ragu-ragu", "Yakin", "Gembira", "Marah", "Tenang"],
+  ["KONTRAS", "Bertentangan", "Serupa", "Selaras", "Sejajar", "Seimbang"],
+  ["INSOMNIA", "Susah tidur", "Mengantuk", "Pusing", "Mimpi buruk", "Pelupa"],
+  ["RENTAN", "Mudah terkena", "Kuat", "Tahan", "Sehat", "Kebal"],
+  ["MUFAKAT", "Sepakat", "Debat", "Pisah", "Tolak", "Bebas"],
+  ["PROFESIONAL", "Ahli", "Amatir", "Pemula", "Sukarelawan", "Magang"]
+];
+
+BANK.variasi = [
+  ["Lawan kata OPTIMIS adalah …", "Pesimis", "Yakin", "Gembira", "Berani", "Realistis"],
+  ["Lawan kata EKSPOR adalah …", "Impor", "Jual", "Kirim", "Produksi", "Dagang"],
+  ["Lawan kata KONKRET adalah …", "Abstrak", "Nyata", "Padat", "Jelas", "Pasti"],
+  ["Lawan kata SURPLUS adalah …", "Defisit", "Untung", "Lebih", "Seimbang", "Modal"],
+  ["Lawan kata STATIS adalah …", "Dinamis", "Tetap", "Diam", "Stabil", "Kaku"],
+  ["Lawan kata MAYORITAS adalah …", "Minoritas", "Sebagian", "Mutlak", "Penuh", "Umum"],
+  ["Lawan kata SENIOR adalah …", "Junior", "Tua", "Ahli", "Atasan", "Pemimpin"],
+  ["Persamaan kata AKURAT adalah …", "Tepat", "Cepat", "Lambat", "Ringkas", "Rapi"],
+  ["Persamaan kata PRIORITAS adalah …", "Utama", "Tambahan", "Pilihan", "Cadangan", "Akhir"],
+  ["Persamaan kata KOMPETEN adalah …", "Cakap", "Pemula", "Berani", "Jujur", "Ramah"],
+  ["Persamaan kata TENDENSI adalah …", "Kecenderungan", "Ketegangan", "Kekuatan", "Kelemahan", "Kepastian"],
+  ["Persamaan kata FLUKTUASI adalah …", "Naik-turun", "Kenaikan", "Penurunan", "Kestabilan", "Kemacetan"],
+  ["Alat untuk mengukur tekanan udara disebut …", "Barometer", "Termometer", "Higrometer", "Anemometer", "Speedometer"],
+  ["Anemometer adalah alat untuk mengukur …", "Kecepatan angin", "Kelembapan udara", "Curah hujan", "Suhu udara", "Tekanan udara"],
+  ["Ilmu yang mempelajari serangga disebut …", "Entomologi", "Ornitologi", "Ekologi", "Etimologi", "Herpetologi"],
+  ["Orang yang ahli dalam ilmu bahasa disebut …", "Linguis", "Geolog", "Arkeolog", "Ekonom", "Sosiolog"],
+  ["Hipotesis adalah …", "Dugaan sementara yang perlu diuji", "Kesimpulan akhir penelitian", "Kumpulan data penelitian", "Teori yang sudah terbukti", "Metode penelitian"],
+  ["Rata-rata hitung dari sekumpulan data disebut …", "Mean", "Median", "Modus", "Varians", "Jangkauan"],
+  ["Nilai yang paling sering muncul dalam sekumpulan data disebut …", "Modus", "Mean", "Median", "Kuartil", "Simpangan"],
+  ["Kata EFISIEN paling tepat berarti …", "Tepat guna dan hemat sumber daya", "Cepat selesai", "Menghasilkan banyak barang", "Mahal tetapi bagus", "Sesuai jadwal"],
+  ["Mata uang resmi Jepang adalah …", "Yen", "Won", "Yuan", "Ringgit", "Baht"],
+  ["Ibu kota Australia adalah …", "Canberra", "Sydney", "Melbourne", "Perth", "Brisbane"],
+  ["Planet terbesar di tata surya adalah …", "Jupiter", "Saturnus", "Uranus", "Neptunus", "Bumi"],
+  ["Proklamasi kemerdekaan Indonesia dibacakan pada tahun …", "1945", "1944", "1946", "1949", "1950"],
+  ["Lambang unsur kimia emas adalah …", "Au", "Ag", "Fe", "Cu", "Pb"],
+  ["Satuan SI untuk gaya adalah …", "Newton", "Joule", "Watt", "Pascal", "Coulomb"],
+  ["Danau terbesar di Indonesia adalah Danau …", "Toba", "Singkarak", "Poso", "Maninjau", "Sentani"],
+  ["Bahasa resmi negara Brasil adalah bahasa …", "Portugis", "Spanyol", "Inggris", "Prancis", "Italia"],
+  ["Tokoh yang dikenal sebagai penemu bola lampu pijar praktis adalah …", "Thomas Alva Edison", "Alexander Graham Bell", "Isaac Newton", "Nikola Tesla", "James Watt"],
+  ["Organ tubuh yang menyaring darah dan menghasilkan urine adalah …", "Ginjal", "Hati", "Paru-paru", "Jantung", "Limpa"]
+];
+
+BANK.logika = [
+  ["Semua mahasiswa FTI wajib mengikuti praktikum. Andi adalah mahasiswa FTI.", "Andi wajib mengikuti praktikum", "Andi tidak wajib mengikuti praktikum", "Andi mungkin wajib mengikuti praktikum", "Semua peserta praktikum adalah mahasiswa FTI", "Tidak dapat disimpulkan"],
+  ["Jika hujan, jalan basah. Hari ini jalan tidak basah.", "Hari ini tidak hujan", "Hari ini hujan", "Mungkin hari ini hujan", "Jalan kering karena panas", "Tidak dapat disimpulkan"],
+  ["Jika lampu menyala, maka listrik mengalir. Listrik mengalir.", "Belum tentu lampu menyala", "Lampu pasti menyala", "Lampu pasti tidak menyala", "Listrik tidak mengalir", "Lampu rusak"],
+  ["Semua kucing adalah mamalia. Sebagian mamalia hidup di air.", "Belum tentu ada kucing yang hidup di air", "Sebagian kucing hidup di air", "Semua mamalia adalah kucing", "Tidak ada kucing yang mamalia", "Semua kucing hidup di air"],
+  ["Tidak ada ikan yang bernapas dengan paru-paru. Lele adalah ikan.", "Lele tidak bernapas dengan paru-paru", "Lele bernapas dengan paru-paru", "Sebagian lele bernapas dengan paru-paru", "Lele bukan ikan", "Tidak dapat disimpulkan"],
+  ["Jika Budi rajin belajar, ia lulus ujian. Jika ia lulus ujian, ia mendapat hadiah.", "Jika Budi rajin belajar, ia mendapat hadiah", "Jika Budi mendapat hadiah, ia pasti rajin belajar", "Budi pasti mendapat hadiah", "Budi tidak rajin belajar", "Budi pasti lulus ujian"],
+  ["Semua peserta yang lulus tes mendapat sertifikat. Rina tidak mendapat sertifikat.", "Rina tidak lulus tes", "Rina lulus tes", "Sertifikat Rina hilang", "Rina mendapat nilai tertinggi", "Tidak dapat disimpulkan"],
+  ["Sebagian mahasiswa suka statistika. Semua yang suka statistika pandai berhitung.", "Sebagian mahasiswa pandai berhitung", "Semua mahasiswa pandai berhitung", "Semua yang pandai berhitung adalah mahasiswa", "Tidak ada mahasiswa yang pandai berhitung", "Semua mahasiswa suka statistika"],
+  ["Jika mesin produksi rusak, maka target tidak tercapai. Ternyata target tercapai.", "Mesin produksi tidak rusak", "Mesin produksi rusak", "Target tidak tercapai", "Mesin sedang diperbaiki", "Tidak dapat disimpulkan"],
+  ["Semua karyawan gudang memakai helm. Sebagian karyawan yang memakai helm bekerja shift malam.", "Belum tentu ada karyawan gudang yang bekerja shift malam", "Semua karyawan gudang bekerja shift malam", "Sebagian karyawan gudang pasti bekerja shift malam", "Tidak ada karyawan gudang yang bekerja shift malam", "Semua yang memakai helm adalah karyawan gudang"],
+  ["Ani lebih tinggi dari Beni. Beni lebih tinggi dari Citra.", "Ani lebih tinggi dari Citra", "Citra lebih tinggi dari Ani", "Beni paling tinggi", "Citra lebih tinggi dari Beni", "Tidak dapat disimpulkan"],
+  ["Jika hari libur, toko tutup. Jika toko tutup, Dani di rumah. Hari ini Dani tidak di rumah.", "Hari ini bukan hari libur", "Hari ini hari libur", "Toko tutup", "Dani bekerja di toko", "Tidak dapat disimpulkan"],
+  ["Setiap produk yang lolos uji kualitas diberi label hijau. Produk X tidak lolos uji kualitas.", "Belum dapat dipastikan produk X berlabel hijau atau tidak", "Produk X pasti berlabel hijau", "Produk X pasti tidak berlabel hijau", "Produk X pasti dibuang", "Produk X lolos uji ulang"],
+  ["Hanya mahasiswa yang laporannya telah di-ACC yang boleh mengumpulkan laporan. Dodi boleh mengumpulkan laporan.", "Laporan Dodi telah di-ACC", "Laporan Dodi belum di-ACC", "Semua laporan yang di-ACC milik Dodi", "Dodi tidak perlu ACC", "Tidak dapat disimpulkan"],
+  ["Semua logam menghantarkan listrik. Benda P tidak menghantarkan listrik.", "Benda P bukan logam", "Benda P adalah logam", "Benda P adalah kayu", "Sebagian logam tidak menghantarkan listrik", "Tidak dapat disimpulkan"],
+  ["Jika harga naik, permintaan turun. Jika permintaan turun, produksi dikurangi. Harga naik.", "Produksi dikurangi", "Produksi ditambah", "Permintaan naik", "Harga turun", "Tidak dapat disimpulkan"],
+  ["Tidak ada atlet yang merokok. Sebagian mahasiswa adalah atlet.", "Sebagian mahasiswa tidak merokok", "Semua mahasiswa tidak merokok", "Semua mahasiswa merokok", "Sebagian atlet merokok", "Tidak ada mahasiswa yang atlet"],
+  ["Rapat dilaksanakan jika dan hanya jika semua anggota hadir. Rapat tidak dilaksanakan.", "Ada anggota yang tidak hadir", "Semua anggota tidak hadir", "Semua anggota hadir", "Rapat ditunda besok", "Tidak dapat disimpulkan"],
+  ["Jika Eka tidak sarapan, maka ia mengantuk di kelas. Eka tidak mengantuk di kelas.", "Eka sarapan", "Eka tidak sarapan", "Eka tidur di kelas", "Eka mengantuk", "Tidak dapat disimpulkan"],
+  ["Semua A adalah B. Semua B adalah C. Sebagian D adalah A.", "Sebagian D adalah C", "Semua D adalah C", "Semua C adalah A", "Tidak ada D yang C", "Semua B adalah D"]
+];
+
+BANK.analitik = [
+  ["Ayah lebih tua dari Ibu. Paman lebih muda dari Ibu, tetapi lebih tua dari Kakak. Siapa yang paling muda?", "Kakak", "Ibu", "Paman", "Ayah", "Tidak dapat ditentukan"],
+  ["Lima mahasiswa mengantre. Budi di depan Citra, Dedi di belakang Citra, Ani di belakang Dedi, dan Eko paling belakang. Siapa yang paling depan?", "Budi", "Citra", "Dedi", "Ani", "Eko"],
+  ["Nilai Fajar lebih tinggi dari Gita. Nilai Hana lebih rendah dari Gita. Nilai Indra lebih tinggi dari Fajar. Siapa yang nilainya kedua terendah?", "Gita", "Hana", "Fajar", "Indra", "Tidak dapat ditentukan"],
+  ["Toko A buka lebih awal dari toko B. Toko C buka lebih awal dari toko A. Toko D buka paling akhir. Toko mana yang buka paling awal?", "Toko C", "Toko A", "Toko B", "Toko D", "Tidak dapat ditentukan"],
+  ["Empat rumah berjajar. Rumah Joko di sebelah kiri rumah Kiki, rumah Lina di sebelah kanan rumah Kiki, dan rumah Mira di sebelah kiri rumah Joko. Rumah siapa yang paling kanan?", "Lina", "Kiki", "Joko", "Mira", "Tidak dapat ditentukan"],
+  ["Kotak merah lebih berat dari kotak biru. Kotak hijau lebih ringan dari kotak biru. Pernyataan yang benar adalah …", "Kotak merah paling berat", "Kotak hijau lebih berat dari kotak merah", "Kotak biru paling ringan", "Kotak biru paling berat", "Kotak hijau sama berat dengan kotak biru"],
+  ["Di sebuah rak, buku Kimia di atas buku Fisika, buku Matematika di bawah buku Fisika, dan buku Biologi di atas buku Kimia. Buku apa yang paling bawah?", "Matematika", "Fisika", "Kimia", "Biologi", "Tidak dapat ditentukan"],
+  ["Senin–Jumat dijadwalkan lima praktikum berbeda: ANOVA, Regresi, Chi-Square, Korelasi, dan Non-parametrik. ANOVA hari Senin, Regresi sehari setelah ANOVA, Korelasi hari Jumat, dan Chi-Square bukan hari Rabu. Non-parametrik dilaksanakan hari …", "Rabu", "Selasa", "Kamis", "Senin", "Jumat"],
+  ["Rudi adalah anak Santi. Santi adalah kakak dari Tono. Tono bagi Rudi adalah …", "Paman", "Kakek", "Ayah", "Sepupu", "Kakak"],
+  ["Umur Wati 2 tahun lebih tua dari Yani. Yani 3 tahun lebih muda dari Zaki. Jika Zaki berumur 20 tahun, berapa umur Wati?", "19 tahun", "17 tahun", "21 tahun", "18 tahun", "20 tahun"],
+  ["Dari 40 mahasiswa, 25 orang suka kopi, 18 orang suka teh, dan 8 orang suka keduanya. Berapa mahasiswa yang tidak suka keduanya?", "5", "8", "3", "7", "10"],
+  ["Mesin P memproduksi lebih banyak dari mesin Q. Mesin R memproduksi lebih sedikit dari Q tetapi lebih banyak dari S. Mesin T memproduksi lebih banyak dari P. Mesin mana yang produksinya paling sedikit?", "S", "R", "Q", "P", "T"],
+  ["A selalu datang sebelum B, C selalu datang setelah B, dan D datang di antara A dan B. Urutan kedatangan yang benar adalah …", "A, D, B, C", "A, B, D, C", "D, A, B, C", "A, B, C, D", "B, A, D, C"],
+  ["Empat sahabat memilih jurusan berbeda: T.Industri, T.Mesin, T.Kimia, dan T.Elektro. Ali tidak memilih Mesin maupun Kimia. Bima memilih Elektro. Candra tidak memilih Kimia. Dewi memilih jurusan …", "T.Kimia", "T.Mesin", "T.Industri", "T.Elektro", "Tidak dapat ditentukan"],
+  ["Lampu L1 menyala jika L2 padam. Lampu L3 menyala jika L1 menyala. Diketahui L2 padam. Pernyataan yang benar adalah …", "L1 dan L3 menyala", "L1 padam", "L3 padam", "Semua lampu padam", "Hanya L2 yang menyala"],
+  ["Tinggi badan P lebih dari Q, R kurang dari S, Q lebih dari S, dan T paling pendek. Siapa yang paling tinggi?", "P", "Q", "S", "R", "T"],
+  ["Dina berangkat pukul 07.15 dan perjalanannya memakan waktu 1 jam 50 menit. Dina tiba pukul …", "09.05", "09.15", "08.55", "09.00", "09.25"],
+  ["Setiap huruf digeser satu huruf ke depan dalam alfabet (A menjadi B, B menjadi C, dst.). Kata ANOVA menjadi …", "BOPWB", "BOPVB", "ZMNUZ", "BNPWB", "BOQWB"],
+  ["Andi mengisi kuesioner setelah Bayu tetapi sebelum Cici. Dedi mengisi sebelum Bayu. Siapa yang mengisi pada urutan ketiga?", "Andi", "Bayu", "Cici", "Dedi", "Tidak dapat ditentukan"],
+  ["Hari ini hari Rabu. Sepuluh hari lagi adalah hari …", "Sabtu", "Jumat", "Minggu", "Kamis", "Senin"]
+];
+
+/* ===== Utilitas ===== */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pick(arr,r){return arr[Math.floor(r()*arr.length)];}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const LET="ABCDE";
+
+/* jadikan soal dari [benar, ...pengecoh] lalu acak posisi jawaban */
+function mk(prompt,correct,distractors,r,extra){
+  const opts=shuffle([correct,...distractors],r);
+  return Object.assign({prompt,options:opts,answer:opts.indexOf(correct)},extra||{});
+}
+
+/* ===== Builder soal teks ===== */
+function buildText(key,seed,fmt){
+  const r=rng(seed);
+  return BANK[key].map(row=>{
+    const [head,...rest]=row;
+    if(key==="kosakata"){ // row = [ganjil, ...4 anggota kelompok]
+      return mk("Manakah kata yang <b>tidak termasuk</b> kelompoknya?",head,rest,r);
+    }
+    const [correct,...dis]=rest;
+    return mk(fmt?fmt(head):esc(head),correct,dis,r);
+  });
+}
+
+/* ===== Gambar: poliomino ===== */
+const PENTO={F:[[1,0],[2,0],[0,1],[1,1],[1,2]],L:[[0,0],[0,1],[0,2],[0,3],[1,3]],N:[[1,0],[1,1],[0,2],[1,2],[0,3]],P:[[0,0],[1,0],[0,1],[1,1],[0,2]],Y:[[1,0],[0,1],[1,1],[1,2],[1,3]],Z:[[0,0],[1,0],[1,1],[1,2],[2,2]]};
+const norm=c=>{const mx=Math.min(...c.map(p=>p[0])),my=Math.min(...c.map(p=>p[1]));return c.map(([x,y])=>[x-mx,y-my]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);};
+const rot=c=>norm(c.map(([x,y])=>[-y,x]));
+const mir=c=>norm(c.map(([x,y])=>[-x,y]));
+const rotN=(c,n)=>{let o=norm(c);for(let i=0;i<n;i++)o=rot(o);return o;};
+const key=c=>JSON.stringify(norm(c));
+function cellsSVG(cells,box){
+  box=box||5;const s=100/(box+1.2);const w=Math.max(...cells.map(p=>p[0]))+1,h=Math.max(...cells.map(p=>p[1]))+1;
+  const ox=(100-w*s)/2,oy=(100-h*s)/2;
+  return `<svg viewBox="0 0 100 100" class="fig" aria-hidden="true">${cells.map(([x,y])=>`<rect class="ink" x="${(ox+x*s).toFixed(1)}" y="${(oy+y*s).toFixed(1)}" width="${(s-2).toFixed(1)}" height="${(s-2).toFixed(1)}" rx="1.5"/>`).join("")}</svg>`;
+}
+function gridSVG(cells,n){
+  const s=80/n,o=10;let g="";
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){const on=cells.some(p=>p[0]===x&&p[1]===y);g+=`<rect class="${on?"ink":"cellbg"}" x="${o+x*s+1}" y="${o+y*s+1}" width="${s-2}" height="${s-2}"/>`;}
+  return `<svg viewBox="0 0 100 100" class="fig" aria-hidden="true"><rect class="frame" x="${o-1}" y="${o-1}" width="${82}" height="${82}"/>${g}</svg>`;
+}
+function polyPts(n,cx,cy,rad,a0){const p=[];for(let i=0;i<n;i++){const a=a0+i*2*Math.PI/n;p.push((cx+rad*Math.cos(a)).toFixed(1)+","+(cy+rad*Math.sin(a)).toFixed(1));}return p.join(" ");}
+function shapeEl(type,cx,cy,rad,cls,a0){
+  a0=a0||-Math.PI/2;
+  if(type==="lingkaran")return `<circle class="${cls}" cx="${cx}" cy="${cy}" r="${rad}"/>`;
+  if(type==="persegi")return `<polygon class="${cls}" points="${polyPts(4,cx,cy,rad*1.25,Math.PI/4)}"/>`;
+  if(type==="segitiga")return `<polygon class="${cls}" points="${polyPts(3,cx,cy,rad*1.2,-Math.PI/2)}"/>`;
+  if(type==="silang"){const t=rad*0.38,L=rad;return `<path class="${cls}" d="M${cx-t} ${cy-L}H${cx+t}V${cy-t}H${cx+L}V${cy+t}H${cx+t}V${cy+L}H${cx-t}V${cy+t}H${cx-L}V${cy-t}H${cx-t}Z"/>`;}
+}
+
+/* 112 — Klasifikasi gambar: 20 soal, 5 pilihan, pilih gambar yang berbeda */
+function buildKlasifikasi(seed){
+  const r=rng(seed);const qs=[];const P="Manakah gambar yang <b>berbeda</b> dari yang lain?";
+  const names=Object.keys(PENTO);
+  const plan=["m","d","s","m","i","m","d","s","m","i","m","d","s","i","m","d","s","m","i","m"];
+  plan.forEach((t,qi)=>{
+    let figs,odd;
+    if(t==="m"){ // rotasi vs cerminan
+      const base=PENTO[names[qi%names.length]];
+      const rots=shuffle([0,1,2,3,pick([0,1,2,3],r)],r);
+      odd=Math.floor(r()*5);
+      figs=rots.map((n,i)=>cellsSVG(i===odd?rotN(mir(base),n):rotN(base,n)));
+    }else if(t==="d"){ // jumlah titik
+      const c=3+Math.floor(r()*4);odd=Math.floor(r()*5);
+      figs=[0,1,2,3,4].map(i=>{const k=i===odd?(c+(r()<.5?-1:1)):c;const pos=shuffle([...Array(9).keys()],r).slice(0,k);
+        return `<svg viewBox="0 0 100 100" class="fig" aria-hidden="true"><rect class="frame" x="8" y="8" width="84" height="84" rx="4"/>${pos.map(p=>`<circle class="ink" cx="${22+(p%3)*28}" cy="${22+Math.floor(p/3)*28}" r="8"/>`).join("")}</svg>`;});
+    }else if(t==="s"){ // jumlah sisi
+      const n=3+Math.floor(r()*3);odd=Math.floor(r()*5);
+      figs=[0,1,2,3,4].map(i=>{const k=i===odd?(n===3?4:n+(r()<.5?-1:1)):n;
+        return `<svg viewBox="0 0 100 100" class="fig" aria-hidden="true"><polygon class="ink-o" points="${polyPts(k,50,50,26+r()*12,r()*Math.PI*2)}"/></svg>`;});
+    }else{ // bentuk dalam = bentuk luar
+      const T=["lingkaran","persegi","segitiga","silang"];odd=Math.floor(r()*5);
+      figs=[0,1,2,3,4].map(i=>{const outer=pick(T,r);let inner=outer;if(i===odd){inner=pick(T.filter(x=>x!==outer),r);}
+        return `<svg viewBox="0 0 100 100" class="fig" aria-hidden="true">${shapeEl(outer,50,52,38,"ink-o")}${shapeEl(inner,50,54,outer==="segitiga"?10:14,"ink")}</svg>`;});
+    }
+    qs.push({prompt:P,options:figs,answer:odd,visual:true});
+  });
+  return qs;
+}
+
+/* 120 — Perseptual: 20 soal, 4 pilihan */
+function buildPerseptual(seed){
+  const r=rng(seed);const qs=[];
+  const rand=(n,k)=>shuffle([...Array(n*n).keys()],r).slice(0,k).map(i=>[i%n,Math.floor(i/n)]);
+  const sk=c=>JSON.stringify(c.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]));
+  const rotG=(c,n)=>c.map(([x,y])=>[n-1-y,x]);
+  const mirG=(c,n)=>c.map(([x,y])=>[n-1-x,y]);
+  const moveOne=(c,n)=>{const out=c.slice();const i=Math.floor(r()*out.length);let p;do{p=[Math.floor(r()*n),Math.floor(r()*n)];}while(out.some(q=>q[0]===p[0]&&q[1]===p[1]));out[i]=p;return out;};
+  for(let qi=0;qi<20;qi++){
+    const n=qi<6?3:4;const rotType=qi%2===1;
+    if(!rotType){
+      const t=rand(n,n===3?4:7);const seen=new Set([sk(t)]);const d=[];
+      while(d.length<3){const v=moveOne(t,n);if(!seen.has(sk(v))){seen.add(sk(v));d.push(v);}}
+      const opts=shuffle([t,...d],r);
+      qs.push({prompt:"Manakah gambar yang <b>sama persis</b> dengan gambar contoh?",figure:gridSVG(t,n),options:opts.map(o=>gridSVG(o,n)),answer:opts.indexOf(t),visual:true});
+    }else{
+      let t,rots;
+      for(;;){t=rand(n,n===3?4:6);rots=[t];for(let k=1;k<4;k++)rots.push(rotG(rots[k-1],n));
+        const rs=new Set(rots.map(sk));const ms=new Set(rots.map(x=>sk(mirG(x,n))));
+        if(rs.size===4&&![...ms].some(m=>rs.has(m)))break;}
+      const k=1+Math.floor(r()*3);const correct=rots[k];const rs=new Set(rots.map(sk));
+      const seen=new Set([sk(correct)]);const d=[];
+      const cand=[mirG(rots[(k+1)%4],n),mirG(rots[(k+3)%4],n),mirG(rots[k],n)];
+      for(const c of cand){if(d.length<2&&!seen.has(sk(c))&&!rs.has(sk(c))){seen.add(sk(c));d.push(c);}}
+      while(d.length<3){const v=moveOne(rots[(k+2)%4],n);if(!seen.has(sk(v))&&!rs.has(sk(v))){seen.add(sk(v));d.push(v);}}
+      const opts=shuffle([correct,...d],r);
+      qs.push({prompt:"Manakah gambar yang merupakan hasil <b>putaran (rotasi)</b> dari gambar contoh?",figure:gridSVG(t,n),options:opts.map(o=>gridSVG(o,n)),answer:opts.indexOf(correct),visual:true});
+    }
+  }
+  return qs;
+}
+
+/* 116 — Kecermatan: 20 soal, kunci 5 kolom, cari karakter yang hilang */
+function buildKecermatan(seed){
+  const r=rng(seed);const qs=[];
+  const pools=[["F","G","H","J","K","M","N","P","R","T","U","W","X","Y","Z"],["0","1","2","3","4","5","6","7","8","9"],["★","◆","●","▲","■","✚","♣","♥","◐","✱","Ω","§","¤","∑"]];
+  const label=["Huruf","Angka","Simbol"];
+  let keyset;
+  for(let qi=0;qi<20;qi++){
+    const sec=qi<7?0:qi<14?1:2;
+    if(qi===0||qi===7||qi===14)keyset=shuffle(pools[sec],r).slice(0,5);
+    const miss=Math.floor(r()*5);
+    const shown=shuffle(keyset.filter((_,i)=>i!==miss),r);
+    const keyTbl=`<div class="kunci"><div class="kunci-cap">Kunci ${label[sec]}</div><table><tr>${LET.split("").map(l=>`<th>${l}</th>`).join("")}</tr><tr>${keyset.map(c=>`<td>${esc(c)}</td>`).join("")}</tr></table></div>`;
+    qs.push({prompt:"Karakter dari kolom mana yang <b>hilang</b> pada soal di bawah?",figure:keyTbl+`<div class="soal-krk">${shown.map(c=>`<span>${esc(c)}</span>`).join("")}</div>`,options:LET.split("").map(l=>"Kolom "+l),answer:miss,compact:true});
+  }
+  return qs;
+}
+
+/* 117 — Kecepatan: 30 soal penjumlahan */
+function buildKecepatan(seed){
+  const r=rng(seed);const qs=[];const ri=(a,b)=>a+Math.floor(r()*(b-a+1));
+  for(let qi=0;qi<30;qi++){
+    const k=qi<10?3:qi<20?4:3;const big=qi>=20;
+    const nums=Array.from({length:k},()=>big?ri(105,489):ri(12,98));
+    const s=nums.reduce((a,b)=>a+b,0);
+    const offs=shuffle([1,-1,2,-2,10,-10,9,-9,11,-11],r);const d=[];
+    for(const o of offs){if(d.length<4&&!d.includes(s+o))d.push(s+o);}
+    qs.push(mk(`<span class="hitung">${nums.join(" + ")} = …</span>`,String(s),d.map(String),r));
+  }
+  return qs;
+}
+
+/* ===== Definisi tes per asisten ===== */
+const TESTS=[
+ {code:"DM-112",slug:"tes-klasifikasi-gambar",name:"Tes Klasifikasi Gambar",short:"Klasifikasi Gambar",group:"Gambar",minutes:20,
+  about:"Mengukur ketelitian pengamatan visual dan penalaran logis: dari lima gambar, empat memiliki kesamaan aturan dan satu tidak.",
+  how:"Pilih satu gambar yang tidak mengikuti aturan yang sama dengan empat gambar lainnya (misalnya hasil cerminan, jumlah titik, atau jumlah sisi yang berbeda).",
+  build:()=>buildKlasifikasi(112)},
+ {code:"DM-113",slug:"tes-iq-hitungan-aritmatika",name:"Tes IQ Hitungan Aritmatika",short:"Hitungan Aritmatika",group:"Kuantitatif",minutes:15,
+  about:"Tes kuantitatif yang mengukur kemampuan berhitung aritmatika sehari-hari: operasi hitung, pecahan, persen, deret, dan soal cerita.",
+  how:"Pilih satu jawaban paling tepat dari lima pilihan. Kerjakan dengan teliti tanpa kalkulator.",
+  build:()=>buildText("aritmatika",113)},
+ {code:"DM-114",slug:"tes-iq-verbal-analogi",name:"Tes IQ Verbal (Analogi)",short:"Verbal Analogi",group:"Verbal",minutes:15,
+  about:"Mengukur kemampuan memahami makna dan hubungan antarkata (padanan hubungan).",
+  how:"Pilih pasangan kata yang memiliki hubungan paling mirip dengan pasangan kata berhuruf kapital.",
+  build:()=>buildText("analogi",114,h=>`<span class="kapital">${esc(h)}</span> = …`)},
+ {code:"DM-115",slug:"tes-iq-verbal-kosakata",name:"Tes IQ Verbal (Kosakata)",short:"Verbal Kosakata",group:"Verbal",minutes:5,
+  about:"Setiap soal berisi lima kata; empat di antaranya memiliki kesamaan atau berada dalam satu kategori.",
+  how:"Pilih satu kata yang tidak termasuk dalam kelompok kata lainnya.",
+  build:()=>buildText("kosakata",115)},
+ {code:"DM-116",slug:"tes-iq-kecerdasan-dan-kecermatan",name:"Tes IQ Kecerdasan & Kecermatan",short:"Kecermatan",group:"Kecermatan",minutes:5,
+  about:"Mengukur kecermatan dan koordinasi mata–tangan menggunakan susunan huruf, angka, dan simbol.",
+  how:"Setiap soal menampilkan tabel kunci berisi lima karakter (kolom A–E) dan empat karakter acak. Tentukan kolom karakter yang hilang.",
+  build:()=>buildKecermatan(116)},
+ {code:"DM-117",slug:"tes-iq-kecerdasan-dan-kecepatan",name:"Tes IQ Kecerdasan & Kecepatan",short:"Kecepatan",group:"Kecepatan",minutes:5,
+  about:"Mengukur kecepatan dan ketepatan menjumlahkan deret angka dalam waktu yang sangat singkat.",
+  how:"Jumlahkan semua angka pada soal lalu pilih hasil yang benar.",
+  build:()=>buildKecepatan(117)},
+ {code:"DM-118",slug:"tes-iq-kemampuan-verbal-variasi",name:"Tes IQ Kemampuan Verbal (Variasi)",short:"Verbal Variasi",group:"Verbal",minutes:25,
+  about:"Mengukur kemampuan verbal yang meliputi persamaan kata, lawan kata, definisi istilah, dan pengetahuan umum.",
+  how:"Baca setiap pertanyaan dengan teliti lalu pilih satu jawaban yang paling tepat.",
+  build:()=>buildText("variasi",118)},
+ {code:"DM-119",slug:"tes-iq-kemampuan-analitik",name:"Tes IQ Kemampuan Analitik",short:"Analitik",group:"Penalaran",minutes:25,
+  about:"Mengukur kemampuan menganalisis pernyataan yang memuat banyak informasi, menyusunnya, lalu menarik kesimpulan logis.",
+  how:"Susun informasi yang diberikan (urutan, hubungan keluarga, jadwal, dan sebagainya), lalu pilih jawaban yang benar.",
+  build:()=>buildText("analitik",119)},
+ {code:"DM-120",slug:"tes-iq-kemampuan-perseptual",name:"Tes IQ Kemampuan Perseptual",short:"Perseptual",group:"Gambar",minutes:25,
+  about:"Soal berupa gambar pola yang sering kali tampak hampir sama. Diperlukan pengamatan yang cermat dan logis.",
+  how:"Bandingkan gambar contoh dengan empat pilihan (A–D), lalu pilih gambar yang sama persis atau hasil putarannya sesuai perintah.",
+  build:()=>buildPerseptual(120)},
+ {code:"DM-121",slug:"tes-iq-verbal-sinonim",name:"Tes IQ Verbal (Sinonim)",short:"Verbal Sinonim",group:"Verbal",minutes:10,
+  about:"Tes persamaan kata yang mengukur pemahaman makna kata dan kemampuan menemukan padanannya.",
+  how:"Pilih kata yang artinya paling dekat dengan kata berhuruf kapital.",
+  build:()=>buildText("sinonim",121,h=>`<span class="kapital">${esc(h)}</span> = …`)},
+ {code:"DM-122",slug:"tes-iq-penalaran-logika",name:"Tes IQ Penalaran Logika",short:"Penalaran Logika",group:"Penalaran",minutes:15,
+  about:"Mengukur kemampuan menarik kesimpulan yang benar dan sah dari pernyataan-pernyataan yang diberikan.",
+  how:"Baca semua pernyataan dengan teliti, lalu pilih kesimpulan yang paling tepat.",
+  build:()=>buildText("logika",122,h=>esc(h)+"<br><span class='tanya'>Kesimpulan yang tepat adalah …</span>")}
+];
+TESTS.forEach(t=>{t.qs=t.build();t.n=t.qs.length;t.nopt=t.qs[0].options.length;});
+
+</script>
+<script>
+(function(){
+const PATH_MODE=!!document.querySelector('meta[name="app-mode"][content="path"]');
+const view=document.getElementById("view"),tabsEl=document.getElementById("tabs");
+const href=s=>PATH_MODE?"/"+(s||""):"#"+(s||"beranda");
+const JUR=["Teknik Industri","Teknik Mesin","Teknik Kimia","Teknik Elektro","Teknik Informatika","Lainnya"];
+const ANG=["2023","2024","2025","Lainnya"];
+let timerId=null,state=null;
+
+function store(){try{return JSON.parse(localStorage.getItem("statis-tes-riwayat")||"[]");}catch(e){return[];}}
+function save(list){try{localStorage.setItem("statis-tes-riwayat",JSON.stringify(list));}catch(e){}}
+
+function currentSlug(){
+  let s=PATH_MODE?location.pathname.replace(/^\/+|\/+$/g,"").split("/").pop():location.hash.replace(/^#/,"");
+  s=(s||"").toLowerCase();
+  const byCode=TESTS.find(t=>t.code.toLowerCase()===s||t.code.toLowerCase().replace("-","")===s);
+  return byCode?byCode.slug:s;
+}
+function go(slug){
+  if(PATH_MODE){history.pushState({},"","/"+(slug||""));}else{location.hash=slug||"beranda";return;}
+  render();
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest("a[data-slug]");if(!a||!PATH_MODE)return;
+  if(e.metaKey||e.ctrlKey)return;e.preventDefault();go(a.dataset.slug);
+});
+window.addEventListener("popstate",render);
+window.addEventListener("hashchange",()=>{if(!PATH_MODE)render();});
+
+function renderTabs(active){
+  tabsEl.innerHTML=`<a class="tab" data-slug="" href="${href("")}" ${!active?'aria-current="page"':""}><small>SEMUA</small><span>Beranda</span></a>`+
+   TESTS.map(t=>`<a class="tab" data-slug="${t.slug}" href="${href(t.slug)}" ${active===t.slug?'aria-current="page"':""}><small>${t.code}</small><span>${t.short}</span></a>`).join("");
+  const cur=tabsEl.querySelector('[aria-current="page"]');if(cur){tabsEl.scrollLeft=cur.offsetLeft-(tabsEl.clientWidth-cur.offsetWidth)/2;}
+}
+function stopTimer(){if(timerId){clearInterval(timerId);timerId=null;}}
+
+function render(){
+  stopTimer();state=null;
+  const slug=currentSlug();const t=TESTS.find(x=>x.slug===slug);
+  renderTabs(t?t.slug:"");document.getElementById("brand").href=href("");document.getElementById("brand").dataset.slug="";
+  if(!t)return renderHome();
+  document.title=t.name+" · Statis Tes";
+  renderIntro(t);
+  window.scrollTo(0,0);
+}
+
+function renderHome(){
+  document.title="Statis Tes";
+  const hist=store();
+  view.innerHTML=`<div class="home-head"><div class="eyebrow">Studi Kasus · Modul ANOVA 2026</div>
+   <h1>Pilih tes sesuai kode asisten pembimbing</h1>
+   <p class="lead">Setiap kode asisten memiliki satu tipe tes. Responden mengerjakan tes, lalu jumlah jawaban benar dicatat sebagai data ANOVA berdasarkan jurusan dan angkatan.</p></div>
+   <div class="grid">${TESTS.map(t=>`<a class="card" data-slug="${t.slug}" href="${href(t.slug)}"><div class="row"><span class="code">${t.code}</span><span class="tag">${t.group}</span></div>
+   <h3>${t.name}</h3><div class="stats"><span>${t.n} soal</span><span>${t.minutes} menit</span><span>${t.nopt} pilihan</span></div></a>`).join("")}</div>
+   ${historyBlock(hist)}`;
+  bindHistory();
+}
+
+function historyBlock(hist){
+  if(!hist.length)return `<section style="margin-top:32px;display:grid;gap:8px"><h2>Riwayat hasil di perangkat ini</h2><p class="hint">Belum ada hasil. Setelah responden menyelesaikan tes, hasilnya muncul di sini dan bisa disalin ke Excel untuk rekap kuesioner.</p></section>`;
+  return `<section style="margin-top:32px;display:grid;gap:12px"><div class="actions" style="justify-content:space-between"><h2>Riwayat hasil di perangkat ini</h2>
+   <div class="actions"><button class="btn ghost" id="copyAll" type="button">Salin semua (untuk Excel)</button><button class="btn ghost" id="clearAll" type="button">Hapus riwayat</button></div></div>
+   <p class="hint" id="copyMsg" aria-live="polite"></p>
+   <div class="tblwrap"><table class="rev"><thead><tr><th>Waktu</th><th>Kode</th><th>Tes</th><th>Nama</th><th>NIM</th><th>Jurusan</th><th>Angkatan</th><th>Benar</th></tr></thead><tbody>
+   ${hist.slice().reverse().map(h=>`<tr><td>${esc(h.waktu)}</td><td>${esc(h.kode)}</td><td>${esc(h.tes)}</td><td>${esc(h.nama)}</td><td>${esc(h.nim)}</td><td>${esc(h.jurusan)}</td><td>${esc(h.angkatan)}</td><td><b>${h.benar}</b> / ${h.total}</td></tr>`).join("")}
+   </tbody></table></div></section>`;
+}
+function tsv(rows){return["Waktu\tKode Asisten\tTes\tNama\tNIM\tJurusan\tAngkatan\tJumlah Benar\tJumlah Soal\tDurasi (detik)"].concat(rows.map(h=>[h.waktu,h.kode,h.tes,h.nama,h.nim,h.jurusan,h.angkatan,h.benar,h.total,h.durasi].join("\t"))).join("\n");}
+function copyText(text,msgEl){
+  const done=()=>{msgEl.textContent="Tersalin. Tempel (Ctrl+V) di Excel atau Google Sheets.";};
+  const fallback=()=>{const ta=document.createElement("textarea");ta.value=text;ta.style.width="100%";ta.rows=4;msgEl.textContent="Salin teks di bawah ini secara manual:";msgEl.after(ta);ta.select();};
+  try{navigator.clipboard.writeText(text).then(done,fallback);}catch(e){fallback();}
+}
+function bindHistory(){
+  const c=document.getElementById("copyAll");if(c)c.onclick=()=>copyText(tsv(store()),document.getElementById("copyMsg"));
+  const d=document.getElementById("clearAll");if(d)d.onclick=()=>{
+    if(d.dataset.confirm){save([]);render();}else{d.dataset.confirm="1";d.textContent="Klik lagi untuk menghapus";}
+  };
+}
+
+function renderIntro(t,notice){
+  view.innerHTML=`<article class="sheet"><div class="sheet-head"><div class="actions"><span class="code">${t.code}</span><span class="tag">${t.group}</span></div>
+   <h1>${t.name}</h1><p class="lead">${t.about}</p></div>
+   <div class="sheet-body">${notice?`<div class="notice" role="alert">${notice}</div>`:""}
+   <dl class="rules"><div><dt>Jumlah soal</dt><dd>${t.n} soal</dd></div><div><dt>Batas waktu</dt><dd>${t.minutes} menit</dd></div><div><dt>Pilihan</dt><dd>A–${LET[t.nopt-1]}</dd></div><div><dt>Nilai salah</dt><dd>Tidak dikurangi</dd></div></dl>
+   <div style="display:grid;gap:8px"><h2>Petunjuk</h2><p style="margin:0">${t.how}</p>
+   <ul class="ket"><li>Setiap soal hanya memiliki <b>satu</b> jawaban benar.</li><li>Jawaban salah tidak mengurangi nilai.</li><li>Jawaban benar ditandai hijau setelah memilih.</li><li>Soal akan <b>direset ulang</b> jika melewati batas waktu.</li><li>Isi Nama, NIM, Jurusan, dan Angkatan untuk melihat hasil.</li></ul></div>
+   <div class="actions"><button class="btn" id="start" type="button">Mulai Tes!</button><span class="hint">Waktu berjalan begitu tes dimulai.</span></div>
+   </div></article>`;
+  document.getElementById("start").onclick=()=>startQuiz(t);
+}
+
+function startQuiz(t){
+  state={t,i:0,ans:[],start:Date.now(),end:Date.now()+t.minutes*60000,locked:false};
+  stopTimer();timerId=setInterval(tick,250);
+  drawQ();
+}
+function fmt(ms){const s=Math.max(0,Math.ceil(ms/1000));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+function tick(){
+  if(!state)return;const left=state.end-Date.now();const el=document.getElementById("timer");
+  if(el){el.textContent=fmt(left);el.classList.toggle("low",left<60000);}
+  if(left<=0){stopTimer();const t=state.t;state=null;renderIntro(t,"Waktu habis. Soal telah direset — silakan mulai ulang tes.");window.scrollTo(0,0);}
+}
+function drawQ(){
+  const {t,i}=state;const q=t.qs[i];
+  const cls=q.visual?("visual"+(q.options.length===4?" n4":"")):q.compact?"compact":"";
+  view.innerHTML=`<article class="sheet"><div class="bar"><span class="timer" id="timer">${fmt(state.end-Date.now())}</span><span class="eyebrow">${t.code} · ${t.short}</span><span class="prog">${i} / ${t.n}</span></div>
+   <div class="track"><i style="width:${i/t.n*100}%"></i></div>
+   <div class="sheet-body"><div class="qnum">SOAL ${i+1}</div><div class="prompt">${q.prompt}</div>
+   ${q.figure?`<div class="figure">${q.figure}</div>`:""}
+   <div class="opts ${cls}" role="group" aria-label="Pilihan jawaban">${q.options.map((o,k)=>`<button type="button" class="opt" data-k="${k}"><span class="bub">${LET[k]}</span><span class="txt">${q.visual?o:esc(o)}</span></button>`).join("")}</div>
+   <div class="actions" id="after" hidden><span class="verdict" id="verdict"></span><button class="btn" id="next" type="button">${i+1<t.n?"Lanjut »":"Lihat hasil »"}</button></div>
+   </div></article>`;
+  state.locked=false;
+  view.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(+b.dataset.k));
+  document.getElementById("next").onclick=()=>{state.i++;if(state.i<t.n)drawQ();else{stopTimer();state.dur=Math.round((Date.now()-state.start)/1000);drawIdent();}window.scrollTo(0,0);};
+}
+function choose(k){
+  if(state.locked)return;state.locked=true;
+  const q=state.t.qs[state.i];state.ans[state.i]=k;
+  view.querySelectorAll(".opt").forEach(b=>{const j=+b.dataset.k;b.disabled=true;if(j===k)b.classList.add("chosen");if(j===q.answer)b.classList.add("right");else if(j===k)b.classList.add("wrong");});
+  const v=document.getElementById("verdict");const ok=k===q.answer;v.textContent=ok?"Benar!":"Salah!";v.className="verdict "+(ok?"ok":"no");
+  document.getElementById("after").hidden=false;document.getElementById("next").focus({preventScroll:true});
+}
+function drawIdent(){
+  const t=state.t;
+  view.innerHTML=`<article class="sheet"><div class="sheet-head"><span class="eyebrow">${t.code} · Tes selesai</span><h1>Isi identitas untuk melihat hasil</h1>
+   <p class="lead">Data ini mengikuti format kuesioner studi kasus (Nama, NIM, Jurusan, Angkatan).</p></div>
+   <div class="sheet-body"><form class="ident" id="ident" novalidate>
+   <div class="field full"><label for="f-nama">Nama</label><input id="f-nama" required autocomplete="name"></div>
+   <div class="field"><label for="f-nim">NIM</label><input id="f-nim" required inputmode="numeric"></div>
+   <div class="field"><label for="f-jur">Jurusan</label><select id="f-jur" required><option value="">Pilih jurusan</option>${JUR.map(j=>`<option>${j}</option>`).join("")}</select></div>
+   <div class="field"><label for="f-ang">Angkatan</label><select id="f-ang" required><option value="">Pilih angkatan</option>${ANG.map(j=>`<option>${j}</option>`).join("")}</select></div>
+   <div class="field"><label for="f-kel">Kode kelompok praktikan (opsional)</label><input id="f-kel"></div>
+   <p class="hint full" id="err" aria-live="polite"></p>
+   <div class="actions full"><button class="btn" type="submit">Tampilkan hasil saya »</button></div></form></div></article>`;
+  document.getElementById("ident").addEventListener("submit",e=>{
+    e.preventDefault();
+    const v=id=>document.getElementById(id).value.trim();
+    if(!v("f-nama")||!v("f-nim")||!v("f-jur")||!v("f-ang")){document.getElementById("err").textContent="Lengkapi Nama, NIM, Jurusan, dan Angkatan terlebih dahulu.";return;}
+    const benar=t.qs.reduce((s,q,i)=>s+(state.ans[i]===q.answer?1:0),0);
+    const rec={waktu:new Date().toLocaleString("id-ID"),kode:t.code,tes:t.name,nama:v("f-nama"),nim:v("f-nim"),jurusan:v("f-jur"),angkatan:v("f-ang"),kelompok:v("f-kel"),benar,total:t.n,durasi:state.dur};
+    const h=store();h.push(rec);save(h);drawResult(rec);window.scrollTo(0,0);
+  });
+}
+function drawResult(rec){
+  const t=state.t;
+  view.innerHTML=`<article class="sheet"><div class="sheet-head"><span class="eyebrow">${t.code} · Hasil Tes</span><h1>${t.name}</h1>
+   <div class="score"><b>${rec.benar}</b><span>jawaban benar dari ${rec.total} soal</span></div></div>
+   <div class="sheet-body">
+   <dl class="idbox"><div><dt>Nama</dt><dd>${esc(rec.nama)}</dd></div><div><dt>NIM</dt><dd>${esc(rec.nim)}</dd></div><div><dt>Jurusan</dt><dd>${esc(rec.jurusan)}</dd></div><div><dt>Angkatan</dt><dd>${esc(rec.angkatan)}</dd></div><div><dt>Durasi</dt><dd>${Math.floor(rec.durasi/60)} mnt ${rec.durasi%60} dtk</dd></div></dl>
+   <div class="actions"><button class="btn" id="copyOne" type="button">Salin hasil</button><a class="btn ghost" data-slug="" href="${href("")}">Ke beranda</a><button class="btn ghost" id="again" type="button">Ulangi tes</button></div>
+   <p class="hint" id="copyMsg" aria-live="polite"></p>
+   <h2>Rincian jawaban</h2>
+   <div class="tblwrap"><table class="rev"><thead><tr><th>No</th><th>Jawaban Anda</th><th>Kunci</th><th>Status</th></tr></thead><tbody>
+   ${t.qs.map((q,i)=>{const a=state.ans[i];const ok=a===q.answer;const lab=k=>k==null?"–":LET[k]+(q.visual?"":". "+esc(q.options[k]));return `<tr><td>${i+1}</td><td>${lab(a)}</td><td>${lab(q.answer)}</td><td class="${ok?"ok-t":"no-t"}">${ok?"Benar":"Salah"}</td></tr>`;}).join("")}
+   </tbody></table></div></div></article>`;
+  document.getElementById("copyOne").onclick=()=>copyText(tsv([rec]),document.getElementById("copyMsg"));
+  document.getElementById("again").onclick=()=>renderIntro(t);
+}
+render();
+})();
+</script>
+
+</body>
+</html>
